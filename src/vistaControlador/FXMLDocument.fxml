@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="475.0" prefWidth="617.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="vistaControlador.FXMLDocumentController">
-    <children>
-        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <ImageView fitHeight="148.0" fitWidth="150.0" layoutX="89.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../GUI/src/imagen/planta.jpg" />
-         </image>
-      </ImageView>
-      <Button layoutX="440.0" layoutY="194.0" mnemonicParsing="false" onAction="#calcular" text="Button" />
-    </children>
+<AnchorPane id="AnchorPane" prefHeight="475.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.FXMLDocumentController">
+   <children>
+      <Label layoutX="72.0" layoutY="64.0" text="Resultado" />
+      <Label layoutX="72.0" layoutY="99.0" text="Ponderacion" />
+      <TextField fx:id="txtNota" layoutX="223.0" layoutY="59.0" />
+      <TextField fx:id="txtPonderacion" layoutX="223.0" layoutY="94.0" />
+      <Button fx:id="btnAgregar" layoutX="507.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#agregar" text="Agregar" />
+      <ScrollPane layoutX="24.0" layoutY="175.0" prefHeight="297.0" prefWidth="581.0">
+         <content>
+            <GridPane fx:id="gpPanel" alignment="TOP_RIGHT" prefHeight="258.0" prefWidth="578.0">
+              <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="257.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="263.0" />
+                <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" maxWidth="436.0" minWidth="10.0" prefWidth="58.0" />
+              </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+               </rowConstraints>
+            </GridPane>
+         </content>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </ScrollPane>
+   </children>
 </AnchorPane>

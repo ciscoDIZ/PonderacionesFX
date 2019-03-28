@@ -10,9 +10,9 @@ package modelo;
  * @author daw
  */
 public class Nota {
-    private final double NOTA;
-    private final double PONDERACION;
-
+    protected final double NOTA;
+    protected final double PONDERACION;
+    
     public Nota(double nota, double ponderacion) {
         this.NOTA = nota;
         this.PONDERACION = ponderacion;
@@ -26,7 +26,7 @@ public class Nota {
         return PONDERACION;
     }
     
-    public double getResultado(){
+    public double getProducto(){
         return PONDERACION * NOTA;
     }
 }

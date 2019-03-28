@@ -19,7 +19,17 @@ public class Ponderaciones {
         notas = new ArrayList<>();
     }
     
+    public Double calcularMedia(){
+        return notas.stream()
+                .mapToDouble(m -> m.getProducto())
+                .sum() / notas.stream()
+                .mapToDouble(m -> m.getPonderacion())
+                .sum();
+    }
     
+    public boolean add(Nota n){
+        return notas.add(n);
+    }
     
     public ArrayList<Nota> getNotas() {
         return (ArrayList<Nota>)notas;
