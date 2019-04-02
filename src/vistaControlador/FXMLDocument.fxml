@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="475.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="475.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.FXMLDocumentController">
    <children>
       <Label layoutX="72.0" layoutY="64.0" text="Resultado" />
       <Label layoutX="72.0" layoutY="99.0" text="Ponderacion" />
       <TextField fx:id="txtNota" editable="false" layoutX="223.0" layoutY="59.0" />
-      <TextField fx:id="txtPonderacion" layoutX="223.0" layoutY="94.0" onAction="#agregar" onKeyPressed="#agregarTeclado" />
+      <TextField fx:id="txtPonderacion" layoutX="223.0" layoutY="94.0" onAction="#agregar" />
       <Button fx:id="btnAgregar" layoutX="533.0" layoutY="94.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
       <ScrollPane layoutX="-1.0" layoutY="175.0" prefHeight="297.0" prefWidth="697.0">
          <content>

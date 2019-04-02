@@ -23,8 +23,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import modelo.Nota;
@@ -35,12 +33,6 @@ import modelo.Ponderacion;
  * @author daw
  */
 public class FXMLDocumentController implements Initializable {
-
-    
-
-    
-
-   
 
     class Fila {
 
@@ -65,9 +57,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private GridPane gpPanel;
     private Ponderacion ponderaciones;
-    private Label lbl;
-    private TextField txt;
-    private Button btn;
+    private Fila fila;
     int indiceFila;
 
     @Override
@@ -77,41 +67,35 @@ public class FXMLDocumentController implements Initializable {
         gpPanel.setAlignment(Pos.TOP_CENTER);
         ponderaciones = new Ponderacion();
         indiceFila = 0;
+        txtPonderacion.requestFocus();
     }
 
-    @FXML
-    private void agregarTeclado(KeyEvent event) {
-    
-    }
+
     @FXML
     private void agregar(ActionEvent event) {
-         try {
+        try {
             controlExcepcionRuntime();
             Button btn = new Button(txtPonderacion.getText());
             Label lbl = new Label(txtNota.getText());
             TextField txt = new TextField();
-            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, evt -> agregarDato(evt));
-            lbl.addEventHandler(MouseEvent.MOUSE_CLICKED, evt -> agregarDato(evt));
-            txt.addEventHandler(MouseEvent.MOUSE_CLICKED, evt -> agregarDato(evt));
-            txt.addEventHandler(KeyEvent.KEY_PRESSED, evt -> operarTxT(evt));
+            btn.addEventHandler(ActionEvent.ACTION, evt -> agregarDato(evt));
+            lbl.addEventHandler(MouseEvent.MOUSE_CLICKED, evt -> llamarDialogo(evt));
+            txt.addEventHandler(ActionEvent.ACTION, evt -> agregarDato(evt));
             btn.setText(txtPonderacion.getText());
             lbl.setAlignment(Pos.CENTER_RIGHT);
-            Fila fila = new Fila(btn, txt, lbl);
+            fila = new Fila(btn, txt, lbl);
             fila.TXT.minWidth(100);
             controlesRuntime.put(btn, fila);
             gpPanel.addRow(indiceFila++,
                     controlesRuntime.get(btn).LBL,
                     controlesRuntime.get(btn).TXT,
                     controlesRuntime.get(btn).BTN);
-            setControlesRuntime(btn);
             controlesRuntime.get(btn).LBL.setText("");
+            controlesRuntime.get(btn).TXT.requestFocus();
+            txtPonderacion.setText("");
         } catch (Exception e) {
             controlExcepcionRuntime(e);
         }
-    }
-    private void agregar(MouseEvent event) {
-       
-
     }
 
     private void controlExcepcionRuntime() throws Exception {
@@ -121,33 +105,12 @@ public class FXMLDocumentController implements Initializable {
             throw new Exception();
         }
     }
-
-    private void operarTxT(KeyEvent evt) {
-        try {
-            if (evt.getCode().equals(KeyCode.ENTER)) {
-                TextField txt = (TextField) evt.getSource();
-                ponderaciones.add(new Nota(Double.parseDouble(this.txt.getText()),
-                        Double.parseDouble(this.btn.getText())));
-                txtNota.setText(String.valueOf(ponderaciones.calcularMedia()));
-                this.lbl.setText(this.lbl.getText() + " " + this.txt.getText());
-                this.txt.setText("");
-            }
-        } catch (Exception e) {
-            controlExcepcionRuntime(e);
-        }
-
-    }
-
-    private void agregarDato(MouseEvent evt) {
-        System.out.println(evt.getTarget());
-        System.out.println(evt.getSource());
-        System.out.println(evt.getEventType());
-
+    private void agregarDato(ActionEvent evt) {
         try {
             if (evt.getSource() instanceof Label) {
-                crearDialogo(controlesRuntime.get(btn).BTN).showAndWait();
-            } else if (evt.getSource() instanceof Button) {
-                Button btn = (Button) evt.getSource();
+                crearDialogo(controlesRuntime.get(fila.BTN).BTN).showAndWait();
+            } else if (evt.getSource() instanceof Button || evt.getSource() instanceof TextField) {
+                Button btn = fila.BTN;
                 System.out.println(btn);
                 controlesRuntime.get(btn).LBL.setText(
                         controlesRuntime.get(btn).LBL.getText()
@@ -157,14 +120,17 @@ public class FXMLDocumentController implements Initializable {
                         controlesRuntime.get(btn).TXT.getText()),
                         Double.parseDouble(controlesRuntime.get(btn).BTN.getText())));
                 txtNota.setText(String.valueOf(ponderaciones.calcularMedia()));
-            } else if (evt.getSource() instanceof TextField) {
-                TextField txt = (TextField) evt.getSource();
-                txt.setText("");
+                fila.TXT.setText("");
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             controlExcepcionRuntime(e);
         }
 
+        }
+
+    private void llamarDialogo(MouseEvent evt){
+        Button btn = fila.BTN;
+        crearDialogo(controlesRuntime.get(btn).BTN).showAndWait();
     }
 
     private void controlExcepcionRuntime(Exception e) {
@@ -173,15 +139,9 @@ public class FXMLDocumentController implements Initializable {
         d.setHeaderText(e.toString());
         d.getDialogPane().getButtonTypes().add(ButtonType.OK);
         d.showAndWait();
-        if (txt != null) {
-            this.txt.setText("");
+        if (fila.TXT != null) {
+            controlesRuntime.get(fila.BTN).TXT.setText("");
         }
-    }
-
-    private void setControlesRuntime(Button btn1) {
-        this.btn = controlesRuntime.get(btn1).BTN;
-        this.txt = controlesRuntime.get(btn1).TXT;
-        this.lbl = controlesRuntime.get(btn1).LBL;
     }
 
     private Dialog crearDialogo(Button btn) {
@@ -202,10 +162,9 @@ public class FXMLDocumentController implements Initializable {
                 ponderaciones.remove(Double.parseDouble(btn.getText()));
                 String[] notasArrayString = txaNotas.getText().split("\\s+");
                 for (int i = 0; i < notasArrayString.length; i++) {
-                    System.out.println(notasArrayString[i]);
                     controlesRuntime.get(btn)
                             .LBL.setText(controlesRuntime.get(btn)
-                                    .LBL.getText()+" "+notasArrayString[i]);
+                                    .LBL.getText() + " " + notasArrayString[i]);
                 }
 
                 ArrayList<Double> notasArrayDouble = (ArrayList<Double>) Arrays.stream(notasArrayString)
@@ -214,7 +173,7 @@ public class FXMLDocumentController implements Initializable {
 
                 Nota[] notasArrayNota = new Nota[notasArrayString.length];
                 for (int i = 0; i < notasArrayNota.length; i++) {
-                    notasArrayNota[i] = new Nota(notasArrayDouble.get(i),Double.parseDouble(btn.getText()) );
+                    notasArrayNota[i] = new Nota(notasArrayDouble.get(i), Double.parseDouble(btn.getText()));
                 }
                 ponderaciones.add(notasArrayNota);
                 resultado = String.valueOf(ponderaciones.calcularMedia());
