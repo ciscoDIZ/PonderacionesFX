@@ -10,20 +10,20 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="475.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="475.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.FXMLDocumentController">
    <children>
       <Label layoutX="72.0" layoutY="64.0" text="Resultado" />
       <Label layoutX="72.0" layoutY="99.0" text="Ponderacion" />
-      <TextField fx:id="txtNota" layoutX="223.0" layoutY="59.0" />
-      <TextField fx:id="txtPonderacion" layoutX="223.0" layoutY="94.0" />
-      <Button fx:id="btnAgregar" layoutX="507.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#agregar" text="Agregar" />
-      <ScrollPane layoutX="24.0" layoutY="175.0" prefHeight="297.0" prefWidth="581.0">
+      <TextField fx:id="txtNota" editable="false" layoutX="223.0" layoutY="59.0" />
+      <TextField fx:id="txtPonderacion" layoutX="223.0" layoutY="94.0" onAction="#agregar" onKeyPressed="#agregarTeclado" />
+      <Button fx:id="btnAgregar" layoutX="533.0" layoutY="94.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
+      <ScrollPane layoutX="-1.0" layoutY="175.0" prefHeight="297.0" prefWidth="697.0">
          <content>
-            <GridPane fx:id="gpPanel" alignment="TOP_RIGHT" prefHeight="258.0" prefWidth="578.0">
+            <GridPane fx:id="gpPanel" alignment="TOP_RIGHT" prefHeight="258.0" prefWidth="668.0">
               <columnConstraints>
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="257.0" />
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="263.0" />
-                <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" maxWidth="436.0" minWidth="10.0" prefWidth="58.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="339.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="261.0" />
+                <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" maxWidth="436.0" minWidth="10.0" prefWidth="68.0" />
               </columnConstraints>
                <rowConstraints>
                   <RowConstraints />
@@ -31,7 +31,7 @@
             </GridPane>
          </content>
          <padding>
-            <Insets top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </ScrollPane>
    </children>

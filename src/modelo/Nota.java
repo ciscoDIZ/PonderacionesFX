@@ -10,23 +10,34 @@ package modelo;
  * @author daw
  */
 public class Nota {
-    protected final double NOTA;
-    protected final double PONDERACION;
+    protected double nota;
+    protected double ponderacion;
+
+    public Nota() {
+    }
     
     public Nota(double nota, double ponderacion) {
-        this.NOTA = nota;
-        this.PONDERACION = ponderacion;
+        this.nota = nota;
+        this.ponderacion = ponderacion;
     }
 
     public double getNota() {
-        return NOTA;
+        return nota;
     }
 
     public double getPonderacion() {
-        return PONDERACION;
+        return ponderacion;
     }
     
     public double getProducto(){
-        return PONDERACION * NOTA;
+        return ponderacion * nota;
+    }
+
+    public void setNota(double nota) {
+        this.nota = nota;
+    }
+
+    public void setPonderacion(double ponderacion) {
+        this.ponderacion = ponderacion;
     }
 }
